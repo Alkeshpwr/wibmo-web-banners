@@ -1,0 +1,269 @@
+.mat-raised-button{
+    background-color:#4577a9;
+}
+
+.mat-chip {
+    font-size: 13px ;
+    line-height: 10px ;
+    border-radius: unset;
+}
+
+.name {
+    display: inline;
+}
+
+.mat-raised-button.mat-primary {
+    font-size: 11px;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 0px;
+    font-size: 12px;
+    color: #888;
+    font-weight: normal;
+}
+.green {
+    margin-right: 10px;
+}
+
+.dob, .dobinput {
+    display: inline;
+    width: 100px;
+    color: #2e9dd4;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.dobbutton {
+    display: inline;
+    height: 25px;
+    line-height: 20px !important;
+}
+
+h6 {
+    font-size: 0.8rem;
+    margin: 0px;
+    color: #2e9dd4;
+    display: inline;
+}
+
+.mat-stroked-button{
+text-transform: capitalize;
+}
+form{
+    display:flex;
+    padding:0px;
+    .mat-card{
+        width: 100%;
+      }
+      .mat-form-field{
+          width: 350px;
+
+      }
+}
+h5{
+    label{
+        text-align:right;
+    }
+}
+a.mat-stroked-button.mat-primary {
+    margin-bottom: 10px;
+
+}
+
+a.mat-stroked-button.mat-primary:hover {
+    text-decoration: none;
+    
+}
+
+.wrap-flex{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: 13px;
+    
+    .tabs{
+        width: 900px;
+      
+    }
+    .mat-card {
+        margin:10px 10px 0px 0px;
+     
+    }
+
+    .margin-left {
+        max-width: 49%;
+        margin-left:5px;
+    }
+
+    .mat-card-content{
+        background-color: #f8f8f8;
+        border: 1px solid #ccc;
+        padding: 20px;
+        width: 100%;
+        text-align: right;
+        margin-left: auto;
+        margin-right: auto;
+        .row{
+            margin:none;
+                 
+        }
+      .left{
+        color: #9b9b9b;
+        font-weight: normal;
+        text-align: right;
+        margin: auto;
+      }
+      .left.tr,th{
+        font-weight: normal;
+      }
+      .left.tr,td{
+          font-weight: 500;
+          color: #09314c;
+          text-align: left;
+      }
+    }
+    .mat-card-title{
+        h5{
+            padding-left:15px;
+            padding-top:0px;
+        }
+    }
+    
+}
+
+mat-grid-tile {
+    border:solid 1px lightblue;
+  }
+
+  .mat-card {
+    margin:20px 25px 5px 25px;
+  }
+
+  .table-container.table-responsive {
+    border: 1px solid #eee;
+    overflow:auto;
+    height:450px;
+}
+
+.filter {
+    float: right;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+ .mat-icon {
+    font-size: 100%;
+    line-height: 1;
+    cursor: pointer;
+    height: 40px;
+}
+
+b, strong {
+    font-size: 1.1em;
+}
+
+.profile {
+    text-align: center;   
+    color: #999;
+    
+    h3 {
+        font: 600;
+        color: firebrick;
+        font-size: 20px;
+    }
+
+    .amount {
+        font-size:13px;
+    }
+
+.price {
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(22, 49, 74);
+}
+
+p {
+    margin-top: 0.6rem;
+    
+}
+
+}
+
+.profilepic {
+    width: 100%;
+    max-width: 200px;
+
+}
+
+.mat-card-content .col-md-8.col-form-label, .mat-card-content .col-md-8.col-form-label b{
+    color: #999;
+    font-size: 15px;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+.mat-stroked-button.mat-accent {
+    color: #e01f12;
+}
+.mat-stroked-button.mat-warn {
+    color: #e01f12;
+    margin-right: 20px;
+}
+
+.mat-card table tbody tr td{
+    border-right: none;
+}
+.mat-stroked-button.mat-primary {
+    color: #3f51b5!important;
+    margin-right: 20px;
+}
+
+.table_page_set .mat-select-value, .mat-paginator-page-size-label {
+    font-size: 13px !important;
+}
+
+.pandetails {
+
+    margin:30px;
+    padding:20px;
+    width: 300px;
+    background: #f8f8f8;
+    border:1px solid #ccc;
+    border-radius: 3px;
+    text-align: left;
+    color: #999;
+    font-size: 13px;
+    img {
+        width: 35px;
+    }
+
+    h5 {
+        font-size:14px;
+        font-weight: 500;
+        margin: 0px;
+        padding:0px;
+        display: inline;
+        color: rgb(22, 49, 74);
+        line-height: 25px;
+    }
+
+    .panstatus {
+        width: 15px;
+    }
+
+}
+
+.fa {
+    font-size: 1.1rem;
+    color: #2e9dd4;
+}
+
+.fa.fa-check-circle {
+    font-size: 0.8rem;
+    color: #7dae76;
+}
+
+.fa.fa-minus-circle {
+    font-size: 0.8rem;
+    color: #ae7676;
+}
