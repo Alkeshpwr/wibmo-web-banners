@@ -1,0 +1,7 @@
+{
+  "/api/*" : {
+    "target": "https://api10.pcdev.enstage-sas.com/csr/in/v3/user/auth/salt",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}
