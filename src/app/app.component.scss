@@ -1,0 +1,73 @@
+.txt-cntr{text-align: center !important;}
+[fxLayout="column"] { border: 1px solid;padding:4px; margin-top:50px; }
+[fxFlex]{  padding:5px;}
+h3      {  padding-top:20px; }
+.header {  background-color: lightyellow;  }
+.left   {  background-color: lightblue;  }
+.right  {  background-color: pink;  }
+
+/***********  material custom css ****************/
+
+mat-form-field{
+    margin:10px;
+    color:rgba(0,0,0,1);
+    // width: 100%;
+   
+}
+
+.button-row button,
+.button-row a {
+  margin-right: 8px;
+}   
+mat-card{
+  margin:20px;
+  // width:99.4%;
+  padding: 20px;
+  mat-card-title{
+    h3{
+      padding:0;
+    }
+  }
+  
+}
+.mat-card-actions{
+margin: 0;
+}
+.table-container {
+   max-height:600px;
+    // width: 100%;
+   
+  }
+  
+  table,mat-table {
+    // width:-webkit-fill-available;
+      min-width:100%; 
+   
+    .mat-header-cell, .mat-cell{
+       
+        // padding: 0 10px;
+        white-space: nowrap;
+        padding-left: 24px;
+        padding-right: 24px;
+        &.action-cell{
+          text-align:center;
+        }
+        &.approved{
+          color:#028412;
+        }
+        &.rejected{
+          color:#fd0505;
+        }
+        &.modify{
+          color:#22a2ec;
+        }
+        
+    }
+   
+  }
+  .mat-dialog-actions, .mat-dialog-content, .mat-dialog-title{
+    text-align: center;
+    display: block;
+  }
+
+  
