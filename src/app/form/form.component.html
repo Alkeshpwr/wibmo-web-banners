@@ -1,0 +1,565 @@
+<form [formGroup]="csrForm">
+  <!-- <mat-form-field class="timezone" *ngIf="TimeZones.length > 1">
+    <mat-select [formControl]="selectedTimeZone" (selectionChange)="changeTime($event)">
+      <mat-select-trigger>
+        <mat-icon><img class="zone" src="../../../assets/images/{{selectedTimeZone.value | lowercase}}.png"
+            alt="zone icon" /></mat-icon> {{selectedTimeZone.value}}
+      </mat-select-trigger>
+      <mat-option *ngFor="let zones of TimeZones" [value]="zones">
+        <mat-icon><img class="zone" src="../../../assets/images/{{zones | lowercase}}.png" alt="zone icon" /></mat-icon>
+        {{ zones }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field> -->
+  <mat-form-field *ngIf="group.indexOf('requester_mobile_no')  > -1">
+    <input matInput name="requesterMobile" type="{{searchstringoption}}" formControlName="requester_mobile_no"
+      placeholder="Requester Mobile">
+    <mat-error *ngIf="!csrForm.controls['requester_mobile_no'].valid ">
+      Please enter a valid phone number
+    </mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="group.indexOf('recipient_mobile_no') > -1">
+    <input matInput name="requesteeMobile" type="{{searchstringoption}}" formControlName="recipient_mobile_no"
+      placeholder="Recipient Mobile">
+    <mat-error *ngIf="!csrForm.controls['recipient_mobile_no'].valid ">
+      Please enter a valid phone number
+    </mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="group.indexOf('createdMonth') > -1">
+    <mat-select placeholder="Created Month" formControlName="createdMonth" (selectionChange)="getCMonth( $event.value)">
+      <mat-option value="00">Jan-01</mat-option>
+      <mat-option value="01">Feb-02 </mat-option>
+      <mat-option value="02">Mar-03</mat-option>
+      <mat-option value="03">Apr-04</mat-option>
+      <mat-option value="04">May-05</mat-option>
+      <mat-option value="05">Jun-06</mat-option>
+      <mat-option value="06">Jul-07</mat-option>
+      <mat-option value="07">Aug-08</mat-option>
+      <mat-option value="08">Sep-09</mat-option>
+      <mat-option value="09">Oct-10</mat-option>
+      <mat-option value="10">Nov-11</mat-option>
+      <mat-option value="11">Dec-12</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field *ngIf="group.indexOf('createdYear') > -1">
+    <mat-select placeholder="Created Year" formControlName="createdYear" (selectionChange)="getCYear( $event.value)">
+      <mat-option value="2018">2018</mat-option>
+      <mat-option value="2019">2019</mat-option>
+      <mat-option value="2020">2020</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field *ngIf="group.indexOf('fromDate') > -1">
+    <input matInput name="fromDate" [min]="fromMinDate" (focus)="picker1.open()" (dateChange)="addEvent( $event.value)"
+      formControlName="fromDate" [max]="fromMaxDate" [matDatepicker]="picker1" placeholder=" From date">
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+    <mat-error *ngIf="!csrForm.controls['fromDate'].valid">
+      From Date is required.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('toDate') > -1">
+    <input matInput name="toDate" [min]="toMinDate" (focus)="picker.open()" formControlName="toDate" [max]="toMaxDate"
+      [matDatepicker]="picker" placeholder=" To date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="!csrForm.controls['toDate'].valid">
+      To Date is required.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('fromDayTime') > -1">
+    <input matInput name="fromDayTime" placeholder="From Time" formControlName="fromDayTime" type="time">
+    <mat-icon *ngIf="selectedZone == 'PH' && TimeZones.length > 1" matSuffix><img class="zone"
+        src="../../../assets/images/ph.png" alt="zone icon" /></mat-icon>
+    <mat-icon *ngIf="selectedZone == 'IN' && TimeZones.length > 1" matSuffix><img class="zone"
+        src="../../../assets/images/in.png" alt="zone icon" /></mat-icon>
+    <mat-error
+      *ngIf="!csrForm.controls['fromDayTime'].valid || csrForm.controls['fromDayTime'].dirty || csrForm.controls['fromDayTime'].touched">
+      From time is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('toDayTime') > -1">
+    <input matInput name="toDayTime" placeholder="To Time" formControlName="toDayTime" type="time">
+    <mat-icon *ngIf="selectedZone == 'PH' && TimeZones.length > 1" matSuffix><img class="zone"
+        src="../../../assets/images/ph.png" alt="zone icon" /></mat-icon>
+    <mat-icon *ngIf="selectedZone == 'IN' && TimeZones.length > 1" matSuffix><img class="zone"
+        src="../../../assets/images/in.png" alt="zone icon" /></mat-icon>
+    <mat-error
+      *ngIf="!csrForm.controls['toDayTime'].valid || csrForm.controls['toDayTime'].dirty || csrForm.controls['toDayTime'].touched">
+      From time is required
+    </mat-error>
+  </mat-form-field>
+
+
+
+
+  <mat-form-field *ngIf="group.indexOf('search_string_type') > -1">
+    <mat-select formControlName="search_string_type" (selectionChange)="changeType($event,'search_string_value')"
+      placeholder="Search By">
+      <mat-option value="1">Mobile Number</mat-option>
+      <mat-option value="2">Email ID</mat-option>
+      <mat-option value="3">PC Account Number</mat-option>
+
+    </mat-select>
+    <mat-error
+      *ngIf="!csrForm.controls['search_string_type'].valid || csrForm.controls['search_string_type'].dirty || csrForm.controls['search_string_type'].touched">
+      User Access String Type is required
+    </mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="group.indexOf('search_string_value') > -1">
+    <input matInput name="searchString" type="{{searchstringoption}}" formControlName="search_string_value"
+      placeholder="Search String">
+    <mat-error *ngIf="searchstringoption == 'email' && !csrForm.controls['search_string_value'].valid">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="searchstringoption == 'number' && !csrForm.controls['search_string_value'].valid">
+      Please enter a valid phone number
+    </mat-error>
+    <mat-error *ngIf="searchstringoption == 'text' && !csrForm.controls['search_string_value'].valid">
+      Please enter a valid Account Number
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('pcAccountNumber') > -1">
+    <input matInput name="pcAccountNumber" type="text" formControlName="pcAccountNumber" placeholder="Account Number">
+    <mat-error *ngIf="!csrForm.controls['pcAccountNumber'].pattern">
+      Please enter a valid Account number
+    </mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="group.indexOf('deviceId') > -1">
+    <input matInput name="deviceId" type="text" formControlName="deviceId" placeholder="User Device ID">
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="group.indexOf('mobileNo') > -1">
+    <input matInput name="mobileNo" type="text" formControlName="mobileNo" placeholder="Mobile Number">
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="group.indexOf('templateId') > -1">
+    <input matInput name="templateId" type="text" formControlName="templateId" placeholder="Template Id">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('simId') > -1">
+    <input matInput name="simId" type="text" formControlName="simId" placeholder="User Sim ID">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('deviceType') > -1">
+    <mat-select placeholder="User Device Type" formControlName="deviceType">
+      <mat-option [value]="0">--Select User Device Type--</mat-option>
+      <mat-option [value]="1">Web/Desktop</mat-option>
+      <mat-option [value]="3">Mobile App</mat-option>
+    </mat-select>
+    <!-- <mat-error
+        *ngIf="!csrForm.controls['deviceType'].valid || csrForm.controls['deviceType'].dirty || csrForm.controls['deviceType'].touched">
+        Device type is required
+      </mat-error> -->
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('upiEvent') > -1">
+    <mat-select placeholder="Event" formControlName="upiEvent">
+      <mat-option value="">--Select UPI Event--</mat-option>
+      <mat-option value="UPI_COLLECT_A_R" id="UPI_COLLECT_A_R">Collect - Approve and Reject</mat-option>
+      <mat-option value="UPI_PAY" id="UPI_PAY">Upi Pay</mat-option>
+      <mat-option value="UPI_SET_MPIN" id="UPI_SET_MPIN">Set Mpin</mat-option>
+      <mat-option value="UPI_CHANGE_PIN" id="UPI_CHANGE_PIN">Change Mpin</mat-option>
+      <mat-option value="UPI_ADD_ACCOUNT" id="UPI_ADD_ACCOUNT">Add Account</mat-option>
+      <mat-option value="UPI_DEREGISTER" id="UPI_DEREGISTER">Deregister</mat-option>
+      <mat-option value="UPI_MANAGE_ACCOUNT" id="UPI_MANAGE_ACCOUNT">Set/Remove default Account</mat-option>
+      <mat-option value="UPI_COLLLECT_REQ" id="UPI_COLLLECT_REQ">Upi collect Request</mat-option>
+    </mat-select>
+    <mat-error
+      *ngIf="!csrForm.controls['upiEvent'].valid || csrForm.controls['upiEvent'].dirty || csrForm.controls['upiEvent'].touched">
+      UPI Event is Required.
+    </mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="group.indexOf('kycReportType') > -1">
+    <mat-select placeholder="kyc Report Type" formControlName="kycReportType">
+      <mat-option value="appointment_Details">Appointment Details</mat-option>
+      <mat-option value="kyc_process_Details">KYC Process Details</mat-option>
+      <mat-option value="kyc_status_change_details">KYC Status Change Details</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+
+  <mat-form-field *ngIf="group.indexOf('searchString2') > -1">
+    <textarea matInput type="text" formControlName="searchString2" placeholder="Enter Account Number" minlength="14"
+      required cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="5"></textarea>
+    <mat-hint>Enter Multiple Account Numbers with comma-separated and 'No Space'</mat-hint>
+    <mat-error *ngIf="csrForm.controls['searchString2'].dirty || csrForm.controls['searchString2'].touched">
+      Please Enter PC Account Number
+    </mat-error>
+  </mat-form-field>
+
+
+
+
+
+  <mat-form-field *ngIf="group.indexOf('txnStatus') > -1">
+    <mat-select placeholder="Status" formControlName="txnStatus">
+      <mat-option value="0">Success</mat-option>
+      <mat-option value="1">Failure</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="group.indexOf('txnFlow') > -1">
+    <mat-select placeholder="Transaction Flow" formControlName="txnFlow">
+      <mat-option value="-1">--Select Transaction Flow--</mat-option>
+      <mat-option value="O">Outflow</mat-option>
+      <mat-option value="I">Inflow</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="group.indexOf('fieldSeparator') > -1">
+    <mat-select placeholder="Column seperator" formControlName="fieldSeparator">
+      <mat-option value="def">Default</mat-option>
+      <mat-option value="126">Tilde ~ </mat-option>
+      <mat-option value="124">Pipe | </mat-option>
+      <mat-option value="44">Comma</mat-option>
+      <mat-option value="8">Tab</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+
+  <mat-form-field *ngIf="group.indexOf('implType') > -1">
+    <mat-select placeholder="Impl Type" formControlName="implType">
+      <mat-option value="">--Select Impl Flow--</mat-option>
+      <mat-option value="Amount Transfer P2P">Amount Transfer P2P</mat-option>
+      <mat-option value="Funds Claimed">Funds Claimed</mat-option>
+      <mat-option value="P2P Load">P2P Load</mat-option>
+      <mat-option value="PG Load">PG Load</mat-option>
+      <mat-option value="System Credit">System Credit</mat-option>
+      <mat-option value="System Debit">System Debit</mat-option>
+      <mat-option value="Unclaimed Funds Reversal">Unclaimed Funds Reversal</mat-option>
+      <mat-option value="System CashBack">System CashBack</mat-option>
+      <mat-option value="Amount Transfer P2P Reversal">Amount Transfer P2P Reversal</mat-option>
+      <mat-option value="MVISA Credit">MVISA Credit</mat-option>
+      <mat-option value="MasterPass Credit">MasterPass Credit</mat-option>
+      <mat-option value="Rupay Qr Credit">Rupay Qr Credit</mat-option>
+      <mat-option value="Merchant Debit">Merchant Debit</mat-option>
+      <mat-option value="Bank Account Transfer">Bank Account Transfer</mat-option>
+      <mat-option value="IMPS Account Transfer">IMPS Account Transfer</mat-option>
+      <mat-option value="Bank Account Transfer Reversal">Bank Account Transfer Reversal</mat-option>
+      <mat-option value="IMPS Account Transfer Reversal">IMPS Account Transfer Reversal</mat-option>
+      <mat-option value="System W2A Bank Credit">System W2A Bank Credit</mat-option>
+      <mat-option value="System W2A IMPS Credit">System W2A IMPS Credit</mat-option>
+      <mat-option value="System W2A Bank Debit">System W2A Bank Debit</mat-option>
+      <mat-option value="System W2A IMPS Debit">System W2A IMPS Debit</mat-option>
+      <mat-option value="Wallet Closure W2A Bank System Credit">Wallet Closure W2A Bank System Credit</mat-option>
+      <mat-option value="Wallet Closure W2A IMPS System Credit">Wallet Closure W2A IMPS System Credit</mat-option>
+      <mat-option value="Wallet Closure W2A Bank System Debit">Wallet Closure W2A Bank System Debit</mat-option>
+      <mat-option value="Wallet Closure W2A IMPS System Debit">Wallet Closure W2A IMPS System Debit</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('lblType') > -1">
+    <mat-select placeholder="Event Type" formControlName="lblType">
+      <mat-option value="">--Select Event Type--</mat-option>
+      <mat-option value="6">CARD EXPIRY 45Day REMINDER</mat-option>
+      <mat-option value="5">CARD EXPIRY 30Day REMINDER</mat-option>
+      <mat-option value="4">CARD EXPIRY EXTENSION</mat-option>
+      <mat-option value="1">KYC UPGRADE REMINDER KEY</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+
+  <mat-form-field *ngIf="group.indexOf('status') > -1">
+    <mat-select placeholder="status" formControlName="status">
+      <mat-option value="-1">--Select Status--</mat-option>
+      <mat-option value="0">New</mat-option>
+      <mat-option value="1">Retry</mat-option>
+      <mat-option value="2">Success</mat-option>
+      <mat-option value="3">Failure</mat-option>
+      <mat-option value="4">Invalid</mat-option>
+      <mat-option value="5">Partial</mat-option>
+      <mat-option value="6">Pool Balance Low</mat-option>
+      <mat-option value="7">Insufficient Pool Balance Low</mat-option>
+      <mat-option value="8">Time Out</mat-option>
+      <mat-option value="9">Velocity Fail</mat-option>
+      <mat-option value="10">Max No Of Txn Per Day</mat-option>
+      <mat-option value="11">Max Amount Add Per Day</mat-option>
+      <mat-option value="12">Max Amount Per Month</mat-option>
+      <mat-option value="13">Max No Of Txn Per Month</mat-option>
+      <mat-option value="14">Card Blocked In CMS</mat-option>
+      <mat-option value="15">AML Limit CMS</mat-option>
+      <mat-option value="16">Daily Limit CMS</mat-option>
+      <mat-option value="17">Monthly Limit CMS</mat-option>
+      <mat-option value="18">Max Limit CMS</mat-option>
+      <mat-option value="19">AML Violation CMS</mat-option>
+      <mat-option value="20">Insufficient Balance CMS</mat-option>
+      <mat-option value="21">Failed At CMS</mat-option>
+      <mat-option value="25">Cashback Failure</mat-option>
+      <mat-option value="26">Yearly Limit CMS</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+
+  <mat-form-field *ngIf="group.indexOf('referralSearchType') > -1">
+    <mat-select placeholder="Referral Search String Type" formControlName="referralSearchType"
+      (selectionChange)="changeType($event,'referralSearchString')">
+      <mat-option value="-1">---</mat-option>
+      <mat-option value="0">Mobile Number</mat-option>
+      <mat-option value="1">Email ID</mat-option>
+      <mat-option value="5">Account Number</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+
+  <mat-form-field *ngIf="group.indexOf('errorCode') > -1">
+    <mat-select placeholder="Card expiry renewal status" formControlName="errorCode">
+      <mat-option value="">---</mat-option>
+      <mat-option value="1">Success</mat-option>
+      <mat-option value="2">Failure</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('pcAccountNo') > -1">
+    <input name="pcAccountNo" matInput type="text" formControlName="pcAccountNo" placeholder="PC Account Number">
+    <mat-error *ngIf="!csrForm.controls['pcAccountNo'].pattern">
+      Please enter a valid Account number
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('category') > -1">
+    <mat-select placeholder="Category" formControlName="category">
+      <mat-option value="">---</mat-option>
+      <mat-option value="AM">AM</mat-option>
+      <mat-option value="IAP">IAP</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('origTxnId') > -1">
+    <input matInput name="origTxnId" type="text" formControlName="origTxnId" placeholder="Original Txn Id">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('rootTxnId') > -1">
+    <input matInput name="rootTxnId" type="text" formControlName="rootTxnId" placeholder="Root Txn Id">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('fundFlowType') > -1">
+    <mat-select placeholder="Fund Flow Type" formControlName="fundFlowType">
+      <mat-option value="">---</mat-option>
+      <mat-option value="0">External</mat-option>
+      <mat-option value="1">Internal</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="group.indexOf('typeofTxn') > -1">
+    <mat-select placeholder="Type of Txn" formControlName="typeofTxn">
+      <mat-option value="">---</mat-option>
+      <mat-option value="Debit">Debit</mat-option>
+      <mat-option value="Credit">Credit</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('amount') > -1">
+    <input matInput name="amount" type="number" formControlName="amount" placeholder="Amount">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('narration') > -1">
+    <input matInput name="narration" type="text" formControlName="narration" placeholder="Narration">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('comments') > -1">
+    <input matInput name="comments" type="text" formControlName="comments" placeholder="Comments">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('reportingEventDesc') > -1">
+    <input matInput name="reportingEventDesc" type="text" formControlName="reportingEventDesc"
+      placeholder="Reporting Event Description">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('walletType') > -1">
+    <mat-select placeholder="Wallet type" formControlName="walletType">
+      <mat-option value="">---</mat-option>
+      <mat-option value="1">Regular Wallet</mat-option>
+      <mat-option value="2">Cashback Wallet</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+
+
+
+  <mat-form-field *ngIf="group.indexOf('referralSearchString') > -1">
+    <input matInput name="referralSearchString" type="{{searchstringoption}}" formControlName="referralSearchString"
+      placeholder="Referral Search String">
+    <mat-error *ngIf=" !csrForm.controls['referralSearchString'].valid">
+      Please enter a valid Referral Search String
+    </mat-error>
+
+  </mat-form-field>
+
+
+
+
+  <mat-form-field *ngIf="group.indexOf('refereeSearchType') > -1">
+    <mat-select placeholder="Referee Search String Type" formControlName="refereeSearchType"
+      (selectionChange)="changeType($event,'refereeSearchString')">
+      <mat-option value="-1">---</mat-option>
+      <mat-option value="0">Mobile Number</mat-option>
+      <mat-option value="1">Email ID</mat-option>
+      <mat-option value="5">Account Number</mat-option>
+    </mat-select>
+    <mat-error
+      *ngIf="!csrForm.controls['refereeSearchType'].valid || csrForm.controls['refereeSearchType'].dirty || csrForm.controls['refereeSearchType'].touched">
+      Referee String type is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('refereeSearchString') > -1">
+    <input matInput name="refereeSearchString" type="{{searchstringoption}}" formControlName="refereeSearchString"
+      placeholder="Referee Search String">
+    <mat-error *ngIf="!csrForm.controls['refereeSearchString'].valid">
+      Please enter a valid Referee Search String
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('referralCode') > -1">
+    <input matInput type="text" name="referralCode" formControlName="referralCode" placeholder="Referral Code">
+    <mat-error *ngIf="!csrForm.controls['referralCode'].valid">
+      Please enter a valid referral code
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field *ngIf="group.indexOf('userIp') > -1">
+    <input matInput type="text" name="userIp" formControlName="userIp" placeholder="User IP">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('userId') > -1">
+    <input matInput type="text" name="userId" formControlName="userId" placeholder="User Id">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('clientIP') > -1">
+    <input matInput type="text" name="clientIP" formControlName="clientIP" placeholder="Client Id">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('txnId') > -1">
+    <input matInput type="text" name="txnId" formControlName="txnId" placeholder="Transaction Id">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('outflowTxnId') > -1">
+    <input matInput type="text" name="outflowTxnId" formControlName="outflowTxnId" placeholder="Outflow Txn Id">
+  </mat-form-field>
+  <mat-form-field *ngIf="group.indexOf('inflowtxnId') > -1">
+    <input matInput type="text" name="inflowtxnId" formControlName="inflowtxnId" placeholder="Inflow Txn Id">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('orgTxnId') > -1">
+    <input matInput type="text" name="orgTxnId" formControlName="orgTxnId" placeholder="Original Transaction Id">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('merchantID') > -1">
+    <input name="merchantID" matInput placeholder="Merchant Id" type="text" formControlName="merchantID">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('merchantName') > -1">
+    <input name="merchantName" matInput placeholder="Merchant Name" type="text" formControlName="merchantName">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('pttTxnId') > -1">
+    <input name="pttTxnId" matInput placeholder="AWB Number" type="text" formControlName="pttTxnId">
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="group.indexOf('merchantTxnID') > -1">
+    <input name="merchantTxnID" matInput placeholder="Merchant Transaction Id" type="text"
+      formControlName="merchantTxnID">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('iapTxnID') > -1">
+    <input name="iapTxnID" matInput placeholder="IAP Transaction Id" type="text" formControlName="iapTxnID">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('cardNumber') > -1">
+    <input name="cardNumber" matInput placeholder="Card Number" type="text" formControlName="cardNumber">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('promoCode') > -1">
+    <input name="promoCode" matInput placeholder="Promo Code" type="text" formControlName="promoCode">
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="group.indexOf('binStartRange') > -1">
+    <input name="binStartRange" matInput placeholder="Bin Start Range" type="text" formControlName="binStartRange">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('recipientAccessData') > -1">
+    <input name="recipientAccessData" matInput placeholder="Recipient Access Data" type="text" formControlName="recipientAccessData">
+  </mat-form-field>
+  
+
+  <mat-form-field *ngIf="group.indexOf('cardAssociationId') > -1">
+    <mat-select placeholder="Card Association Id" formControlName="cardAssociationId">
+      <mat-option value="">---</mat-option>
+      <mat-option value="M">M</mat-option>
+      <mat-option value="R">R</mat-option>
+      <mat-option value="D">D</mat-option>
+      <mat-option value="V">V</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="group.indexOf('cardUnion') > -1">
+    <mat-select placeholder="Card Union" formControlName="cardUnion">
+      <mat-option value="">---</mat-option>
+      <mat-option value="Master">Master Card</mat-option>
+      <mat-option value="Rupay">Rupay</mat-option>
+      <mat-option value="Dinner">Dinner's</mat-option>
+      <mat-option value="Visa">Visa</mat-option>
+      <mat-option value="JCB">JCB</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <mat-form-field *ngIf="group.indexOf('fundStatus') > -1">
+    <mat-select placeholder="Status" formControlName="status">
+      <mat-option value="0">---</mat-option>
+      <mat-option value="100">Fund_Claimed_Successful(100)</mat-option>
+      <mat-option value="25">Fund_Not_Claimed/Fund_Claim_Attempt_Failed (25)</mat-option>
+      <mat-option value="235">Fund_Reversed_To_Sender (235)</mat-option>
+      <mat-option value="175">Invalid Confirm Code (175)</mat-option>
+      <mat-option value="50">Rejected by Recipient (50)</mat-option>
+      <mat-option value="125">Expired (125)</mat-option>
+      <mat-option value="150">Failed (150)</mat-option>
+      <mat-option value="200">Failed no card mapped (200)</mat-option>
+      <mat-option value="225">Rejected by system (225)</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  
+  <div *ngIf="searchForm" style="display:inline">
+    <button mat-raised-button color="primary" [disabled]="!csrForm.valid" (click)="csrForm.valid && SendFormData(csrForm.value,'json')"
+      type="submit">Search
+    </button>
+  </div>
+  <div  style="display:inline" *ngIf="!searchForm">
+    <button mat-raised-button color="primary" [disabled]="!csrForm.valid"
+      (click)="csrForm.valid && SendFormData(csrForm.value, 'json')" type="submit">Fetch Report
+    </button>
+    <button  mat-stroked-button color="primary"  [disabled]="!csrForm.valid"
+      (click)="SendFormData(csrForm.value, 'csv')" type="submit">Request for Download
+      CSV
+    </button>
+  </div>
+
+</form>

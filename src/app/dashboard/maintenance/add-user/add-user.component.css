@@ -1,0 +1,18 @@
+
+
+.grouplist {
+    max-height: 200px;
+    overflow-x: scroll;
+    border:2px solid #dddddd;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.mat-icon {
+    cursor: pointer;
+}
+
+.formcss {
+    background: #f8f8f8;
+    padding: 10px;
+}

@@ -1,0 +1,109 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <div class="page__header__icon"><h3>Add User</h3></div>
+            
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+
+        <form class="formcss" style="max-width:800px"  [formGroup]="userform" (ngSubmit)="onSubmit(userform.value)">
+
+
+            <mat-form-field class="form-control-style-3">
+                <input matInput type="text" class="form-control" formControlName="name" id="name" placeholder="Name" />
+                <mat-error *ngIf="!userform.controls['name'].valid&&userform.controls['name'].dirty">
+                    Name is required
+                </mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field class="form-control-style-3">
+                <input matInput type="text" class="form-control" formControlName="loginName" id="loginName" placeholder="User Name" />
+                <mat-error *ngIf="!userform.controls['loginName'].valid&&userform.controls['loginName'].dirty">
+                    Username is required
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-control-style-3">
+                <input matInput [type]="hide ? 'password' : 'text'" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" formControlName="password"
+                    id="password" placeholder="Password" />
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-error *ngIf="!userform.controls['password'].valid&&userform.controls['password'].dirty">
+                    <span *ngIf="userform.controls['password'].errors['required']">Password is required</span>
+                    <span *ngIf="userform.controls['password'].errors['pattern']">Contain 8 or more characters that are of
+                        at least one number, and one uppercase and lowercase letter</span>
+                </mat-error>
+            </mat-form-field>
+
+           
+
+
+
+            <mat-form-field class="form-control-style-3">
+                <input matInput type="text" class="form-control" pattern="[789][0-9]{9}" formControlName="mobile" id="mobile" placeholder="mobile Number"
+                />
+                <mat-error *ngIf="!userform.controls['mobile'].valid&&userform.controls['mobile'].dirty">
+                    <span *ngIf="userform.controls['mobile'].errors['required']">mobile Number is required</span>
+                    <span *ngIf="userform.controls['mobile'].errors['minlength']">Must be longer than 10 characters</span>
+                    <span *ngIf="userform.controls['mobile'].errors['maxLength']">Must be longer than 10 characters</span>
+                    <span *ngIf="userform.controls['mobile'].errors['pattern']">Should contain proper mobile Number</span>
+
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-control-style-3">
+                <input matInput type="email" class="form-control" formControlName="email" id="email" placeholder="Email" />
+                <mat-error *ngIf="!userform.controls['email'].valid&&userform.controls['email'].dirty">
+                   Email is required
+                </mat-error>
+            </mat-form-field>
+
+            <!-- <mat-form-field class="form-control-style-3">
+                <mat-select formControlName="otpEnabled" id="otpEnabled" placeholder="Enable OTP">
+                    <mat-option value="">Select</mat-option>
+                    <mat-option value="true">True</mat-option>
+                    <mat-option value="false">False</mat-option>
+                </mat-select>
+                <mat-error *ngIf="!userform.controls['otpEnabled'].valid&&userform.controls['otpEnabled'].dirty">
+                    Otp enabled is required
+                </mat-error>
+            </mat-form-field> -->
+
+
+            <mat-form-field class="form-control-style-3">
+                    <mat-select placeholder="Select the groups" formControlName="userGroupList"  multiple>
+                            <!-- <mat-select-trigger>
+                              {{userform.controls['userGroupList'].value ? userform.controls['userGroupList'].value[0] : ''}}
+                              <span *ngIf="userform.controls['userGroupList'].value?.length > 1" class="example-additional-selection">
+                                (+{{userform.controls['userGroupList'].value.length - 1}} {{userform.controls['userGroupList'].value?.length === 2 ? 'other' : 'others'}})
+                              </span>
+                            </mat-select-trigger> -->
+                            <mat-option *ngFor="let group of groupList" [value]="group.id">{{group.groupName}}</mat-option>
+                            <mat-error *ngIf="!userform.controls['userGroupList'].valid && userform.controls['userGroupList'].dirty">
+                                    Select atleast one group
+                                 </mat-error> 
+                          </mat-select>
+
+
+             
+            </mat-form-field>
+            <!-- <div class="selection_list_set">
+                <label>Select the groups below</label>
+                <mat-selection-list (selectionChange)="addPermissions($event)">
+                    <mat-list-option *ngFor="let groupList of groupList">
+                        {{groupList.name}}
+                    </mat-list-option>
+                </mat-selection-list>
+            </div> -->
+
+
+
+
+            <div class=" text-left d-block">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!userform.valid">Submit</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,30 @@
+.mat-expansion-panel-header {
+    margin-bottom: 20px;
+}
+
+.mat-stroked-button {
+    margin-bottom: 20px;
+}
+
+.mat-icon img {
+    width: 30px;
+    cursor: pointer;
+}
+
+.mat-raised-button, .mat-stroked-button {
+    margin-right:10px;
+    text-transform: capitalize;
+}
+
+.zone {
+    width: 15px !important;
+    margin-bottom: 10px;
+}
+
+mat-form-field.timezone.mat-form-field {
+    position: absolute;
+    right: 15px;
+    top: 0px;
+    width: 75px;
+}
+

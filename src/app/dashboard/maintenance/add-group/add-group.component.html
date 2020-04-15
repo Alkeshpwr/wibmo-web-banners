@@ -1,0 +1,52 @@
+
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+                <div class="page__header__icon"><h3>Create Group</h3></div>
+            </mat-card-title>
+    </mat-card-header>
+    <hr/>
+    <mat-card-content>
+        <form  [formGroup]="createGroupform" (ngSubmit)="onSubmit(createGroupform.value)">
+
+
+            <div class="usr-permission-block">
+            
+                
+                
+                
+                <div class="form-row">
+                  <mat-form-field class="form-group col-md-3 mr-3 create__group">
+                        <input matInput type="text" class="form-control" formControlName="groupName" placeholder="Group Name">
+                        <mat-error *ngIf="!createGroupform.controls['groupName'].valid&&createGroupform.controls['groupName'].dirty">
+                            Group Name is required
+                          </mat-error>
+                        </mat-form-field>
+            
+            
+                      <div class="form-group col-md-4 pull-right">
+                            <label class="d-block">&nbsp;</label>
+                            <button mat-raised-button color="primary" type="button" type="submit" [disabled]="!createGroupform.valid">Create Group</button>
+                          </div>
+            
+                </div>
+                
+                <hr/>
+                <ul class="permission-list">
+                  <li *ngFor="let allReportPermissions of allReportPermission" class="half">
+                  <mat-checkbox (change)="updateCheckedOptions(allReportPermissions?.reportId, $event)"   value="{{allReportPermissions?.reportId}}"> <b>{{allReportPermissions?.reportName | removedash}} </b></mat-checkbox>  
+                  </li>
+              </ul>
+
+
+                </div>
+              </form>
+<div class="clear"></div>
+</mat-card-content>
+
+</mat-card>
+
+
+
+
+

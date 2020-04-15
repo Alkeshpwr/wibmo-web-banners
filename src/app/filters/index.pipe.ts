@@ -1,0 +1,10 @@
+import { StatePipe } from "./state.pipe";
+import { amountPipe } from './amount.pipe';
+import { eventPipe } from './event.pipt';
+import { KycPipe } from "./kyc.pipe";
+import { StatusPipe } from "./status.pipe";
+import { DobPipe } from "./dob.pipe";
+import { GenderPipe } from "./gender.pipe";
+import { WalletStatusPipe } from "./wallet-status.pipe";
+import { timezonePipe } from "./timezone.pipe";
+export{ StatePipe,amountPipe,eventPipe,KycPipe,StatusPipe,DobPipe,GenderPipe, WalletStatusPipe, timezonePipe} ;

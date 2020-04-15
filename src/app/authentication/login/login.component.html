@@ -1,0 +1,74 @@
+<div class="loginbackg">
+  <div class="loginform">
+        <div class="card card-login">
+          <div class="card-header card-header-rose text-center">
+            <p class="white">Login to <img src="../../assets/images/light-logo.png" alt=""  width="90px" /> Banner portal</p>
+          </div>
+          <form  [formGroup]="userform" class="login-container" (ngSubmit)="onSubmit(userform.value)">
+          
+            <mat-form-field>
+              <input matInput type="text" formControlName="username" id="username" placeholder="Enter User Name" required>
+              <mat-error *ngIf="!userform.controls['username'].valid && (userform.controls['username'].dirty || userform.controls['username'].touched)">
+                <span>Username is required</span>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput [type]="hidePassword ? 'password' : 'text'"  formControlName="password" id="password" placeholder="Password" required>
+              <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-error  *ngIf="!userform.controls['password'].valid && (userform.controls['password'].dirty || userform.controls['password'].touched)">
+                <span *ngIf="userform.controls['password'].errors['required']">Password is required</span>
+                <span *ngIf="userform.controls['password'].errors['minlength']">Must be longer than 8 characters</span>
+              </mat-error>
+            </mat-form-field>
+
+            <!--<mat-form-field>
+               <mat-select formControlName="programId" id="programname" placeholder="Select Program Name" required>
+                <mat-option  *ngFor="let item of initResp" [value]="item.programId">{{item.programName}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!userform.controls['programId'].valid && (userform.controls['programId'].dirty || userform.controls['programId'].touched)">
+                Program Name is required
+              </mat-error>
+            </mat-form-field>-->
+            
+            <div class="pull-right d-inline-block pt-3">
+              <button mat-raised-button color="primary" type="submit" [disabled]="!userform.valid">Sign In</button>
+            </div>
+          </form>
+        </div>
+</div>
+</div> 
+
+<!-- 
+<div class="otpenabled" *ngIf="showOtp">
+<p class="otp-sent">Otp is sent to your mobile number {{Userdetails.mobileNo | mobile}}</p>
+<form  [formGroup]="otpForm" (ngSubmit)="onOtpSubmit(otpForm.value)" class="login-container">
+<mat-form-field>
+ <input matInput type="text" formControlName="otp" pattern="[0-9]{6}" autocomplete="off" id="otp" placeholder="Please Enter OTP">
+ <mat-error  *ngIf="!otpForm.controls['otp'].valid&& (otpForm.controls['otp'].dirty || otpForm.controls['otp'].touched)">
+   <span *ngIf="otpForm.controls['otp'].errors['required']"> OTP is required.</span>
+   <span *ngIf="otpForm.controls['otp'].errors['pattern']"> Should contain 6 numbers only</span>
+ </mat-error>
+</mat-form-field>
+<mat-checkbox formControlName="trustDevice" type="checkbox" id="defaultCheck1"> Trust this device</mat-checkbox>
+<div class="buttons">
+ <div class="pull-left d-inline-block pb-3">
+   <button mat-stroked-button color="primary" (click)="backToLogin();">
+     back
+   </button>
+ </div>
+ <div class="pull-right d-inline-block pb-3">
+   <button mat-raised-button color="primary" [disabled]="!otpForm.valid">
+     <span>Verify OTP</span>
+   </button>
+ </div>
+</div>
+<hr/>Didn't recieve the OTP? <br />
+
+<a href (click)="sendOtp()">
+ Send Again
+</a>
+</form>
+</div> -->
+
+
+

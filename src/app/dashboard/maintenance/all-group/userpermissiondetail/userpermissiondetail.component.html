@@ -1,0 +1,23 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+                <div class="page__header__icon"><h3>{{groupName}}</h3></div>
+            </mat-card-title>
+    </mat-card-header>
+    <hr/>
+
+
+    <mat-card-content>
+        <div class="usr-permission-block">
+            <ul class="permission-list">
+                <li *ngFor="let allReportPermissions of allReportPermission" class="half">
+                <mat-checkbox (change)="updateCheckedOptions(allReportPermissions?.reportId, $event)"  
+                [checked]="selectionId?.indexOf(allReportPermissions?.reportId) > -1"  value="{{allReportPermissions?.reportId}}"> <b>{{allReportPermissions?.reportName | removedash}}, {{allReportPermissions?.reportId}}  </b></mat-checkbox>  
+                </li>
+            </ul>
+            <div class="text-right">
+                    <button mat-raised-button color="primary" type="button" (click)="updatePermissionlist();">Update</button>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

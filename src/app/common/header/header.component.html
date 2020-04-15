@@ -1,0 +1,42 @@
+
+
+
+<div>
+   
+</div>
+<ul class="nav">
+    <li class="nav-item">
+        <a class="nav-link" mat-button [routerLink]="['/home']" >
+            <mat-icon><img src="../../../assets/images/search.png" alt="Home icon" /></mat-icon>
+                <br/>
+           <span>Home</span>
+           </a>
+    </li>
+   
+    <li class="nav-item"  [parentPermission]="'CSR MANAGEMENT'">
+            <a class="nav-link" mat-button [matMenuTriggerFor]="menu1">
+                <mat-icon><img src="../../../assets/images/maintain.png"  alt="maintenence icon" /></mat-icon>
+                <br/>
+            <span>Maintenance</span>
+            </a>
+            <mat-menu #menu1="matMenu">
+                <button mat-menu-item [routerLink]="['/dashboard/maintenance/alluser']">All Users</button>
+                <button mat-menu-item [routerLink]="['/dashboard/maintenance/adduser']">Create User</button>
+                <button mat-menu-item [routerLink]="['/dashboard/maintenance/allgroup']">All Group</button>
+                <button mat-menu-item [routerLink]="['/dashboard/maintenance/creategroup']">Create Group</button>
+            </mat-menu>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" mat-button [matMenuTriggerFor]="menu">
+            <mat-icon><img src="../../../assets/images/profile.png" alt="profile icon" /></mat-icon>
+            <br/>
+            <span>{{userResp.name}}</span>
+        </a>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/dashboard/changepassword']">Change password</button>
+            <!-- <button mat-menu-item [routerLink]="['/dashboard/about']">About</button> -->
+            <button mat-menu-item (click)="logout()">Logout</button>
+        </mat-menu>
+    </li>
+</ul>

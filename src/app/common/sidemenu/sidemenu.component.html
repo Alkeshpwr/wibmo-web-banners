@@ -1,0 +1,35 @@
+<article class="logobox">
+  <a class="navbar-brand" [routerLink]="['/home']">
+    <img *ngIf="userdetails.currentProgramIdSelected == '6019' || userdetails.currentProgramIdSelected == null;" src="../../../assets/images/payzapp-logo.png" alt="Logo" />
+    <img *ngIf="userdetails.currentProgramIdSelected == '1000';" src="../../../assets/images/logo.png" alt="Logo" />
+    <img *ngIf="userdetails.currentProgramIdSelected == '2000';" src="../../../assets/images/bdo.png" alt="Logo" />
+  </a>
+</article>
+<perfect-scrollbar [config]="{scrollYMarginOffset:16}" [scrollIndicators]="true">
+  <mat-accordion>
+    <!-- <mat-expansion-panel class="lineseparator pushnotifications" [permission]="'30012'" [expanded]="step === 30012">
+      <mat-expansion-panel-header [expandedHeight]="'48px'">
+        <mat-icon><i class="fa fa-paper-plane-o" aria-hidden="true"></i></mat-icon>
+        <mat-panel-title [routerLink]="['/tools/pushnotifications']">
+          <span class="">Push Notifications</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel> -->
+    <!-- [parentPermission]="'ACCOUNT_HOLDER'" -->
+ <div  [hidden]="!showSideMenu">
+      <mat-expansion-panel *ngFor="let main of wibmoLinks ,let i = index;" [parentPermission]="main.data?.roles"  [hidden]="main.path == ''" [expanded]="step === main.data?.roles">
+          <mat-expansion-panel-header [expandedHeight]="'48px'">
+              <mat-icon>{{main.data?.icon}}</mat-icon>
+              <mat-panel-title *ngIf="main.data">
+                {{main.data.breadcrumbs}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            
+            <ul>
+              <li   *ngFor="let sublink of subMenuLinks[main.path] "  [hidden]="sublink.path == ''" [permission]="sublink.data?.roles" >
+                  <a routerLink="{{main.path}}/{{sublink.path}}">{{sublink.data?.breadcrumbs}}</a></li>
+            </ul>
+      </mat-expansion-panel>
+    </div>  
+  </mat-accordion>
+</perfect-scrollbar>

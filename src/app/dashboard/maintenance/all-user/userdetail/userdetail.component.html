@@ -1,0 +1,74 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <div class="page__header__icon"><h3>{{userResp?.loginName}}</h3></div>
+        </mat-card-title>      
+    </mat-card-header>
+    <mat-card-content>
+        <div class="formbox m-1 col-pad0">
+          
+            <form class="formcss" style="max-width:800px" [formGroup]="getUserDetailsform" (ngSubmit)="onSubmit(getUserDetailsform.value)">
+             
+              <div class="form-row">
+                <mat-form-field class="col-md-2 mr-1">
+                  <input matInput type="text" id="username" formControlName="username" placeholder="User Name"  readonly class="form-control-plaintext" name ="username"  />
+                </mat-form-field>
+          
+                <mat-form-field class="col-md-2 mr-1">
+                  <input matInput type="text" id="badtrycount" readonly formControlName="badtrycount" placeholder="Bad Try count"  class="form-control-plaintext" name ="badtrycount"   />
+                </mat-form-field>
+
+                <div class="inputmock">
+                  <label>
+                    Last Login Time
+                  </label>
+                  <br/>
+                  <p>
+                  <span [innerHTML]="userResp?.lastLoginTime | timezone | date:'medium' | flag ">
+                    </span>
+                  </p>
+
+                </div>
+                <mat-form-field class="col-md-2 mr-1">
+                  <input matInput type="text" readonly class="form-control-plaintext" placeholder="User Id"  formControlName="userId" id="userId" name ="userId"  formControlName="userId" />
+                </mat-form-field>
+          
+                <mat-form-field class="col-md-2 mr-1">
+                  <mat-select formControlName="status" id="status" placeholder="Select Status">
+                      <mat-option [value]="-1">Select Status</mat-option>
+                      <mat-option [value]="1" >ACTIVE</mat-option>
+                      <mat-option [value]="0" >BLOCKED</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                
+                <div class="col-md-12 mr-1 selection_list_user_set">
+                  <label for="statuss" class="col-form-label">User Group List</label>
+                  <div class="grouplist">
+                    <div class="form-check">
+                      <span *ngFor="let groupList of userGroupResp" class="selection_list_user_list">
+                          <mat-checkbox class="form-check-input"  [checked]="(selectedList.indexOf(groupList?.id) > -1)?true:false"  id="{{groupList?.groupName}}"
+                          (change)="onChange(groupList?.id, $event.checked)" [value]="groupList?.id"> {{groupList?.groupName}} 
+                         </mat-checkbox>
+                        <br/>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="text-left d-block">
+                  <a mat-stroked-button color="primary" [routerLink]="['/dashboard/maintenance/alluser/']">back</a>
+                </div>
+
+
+              <div class="text-right d-block">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!getUserDetailsform.valid">Save</button>
+              </div>
+
+
+            </form>
+          
+          </div>
+    </mat-card-content>
+</mat-card>
